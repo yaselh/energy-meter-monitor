@@ -7,7 +7,9 @@
 
 # How to use
 install the requirements
+
 `pip install -r requirements.txt`
 
 run main.py with your chosen test images (for now only cropped images to focus on the digits)
+
 `python main.py`
