@@ -40,16 +40,10 @@ def ocr_core(filename):
     print(digits)
 
 pred_list = [
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10898.png',
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10896.png',
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10897.png',
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10895.png',
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10894.png',
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10893.png',
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10892.png',
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10891.png',
-    '/root/ocrm/models/cnn/data/scut/raw/easy_samples/10890.png',
+    'images/test/cropped_1.png',
+    'images/test/cropped_2.png'
 ]
+
 imgs = []
 for pred in pred_list:
     imgs.append(cv2.imread(pred))
