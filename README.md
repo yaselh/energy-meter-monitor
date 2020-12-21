@@ -1,5 +1,5 @@
 # energy-meter-monitor
-
+Code tested for python 3.8.3.
 
 ## currently working on:
 - better region of interest estimation (see branch feat/roi)
