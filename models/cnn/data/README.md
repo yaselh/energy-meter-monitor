@@ -24,8 +24,8 @@ The structure of this folder is as follows:
     |   |   |   |-- 6
     |   |   |   |-- 7
     |   |   |   |-- 8
-    |   |   |   `-- 9
-    |   |   `-- train
+    |   |   |    -- 9
+    |   |    -- train
     |   |       |-- 0
     |   |       |-- 1
     |   |       |-- 10
@@ -45,8 +45,8 @@ The structure of this folder is as follows:
     |   |       |-- 6
     |   |       |-- 7
     |   |       |-- 8
-    |   |       `-- 9
-    |   `-- easy_samples
+    |   |        -- 9
+    |    -- easy_samples
     |       |-- test
     |       |   |-- 0
     |       |   |-- 1
@@ -67,8 +67,8 @@ The structure of this folder is as follows:
     |       |   |-- 6
     |       |   |-- 7
     |       |   |-- 8
-    |       |   `-- 9
-    |       `-- train
+    |       |    -- 9
+    |        -- train
     |           |-- 0
     |           |-- 1
     |           |-- 10
@@ -88,7 +88,8 @@ The structure of this folder is as follows:
     |           |-- 6
     |           |-- 7
     |           |-- 8
-    |           `-- 9
-    `-- raw
+    |            -- 9
+     -- raw
         |-- difficult_samples
-        `-- easy_samples
+         -- easy_samples
+`
