@@ -5,6 +5,7 @@ class Preprocessor:
     def __init__(self, path_txt):
         self.txt = open(path_txt, 'r') 
         self.lines = self.txt.readlines() 
+        print("{} images found".format(len(self.lines)))
     
     def split_and_invert(self):
         #h,w = 55,43

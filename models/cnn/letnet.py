@@ -56,8 +56,7 @@ class LetNet5(nn.Module):
 
         self.transforms = transforms.Compose([
             transforms.Grayscale(),
-            transforms.Resize(input_size),
-            transforms.CenterCrop(input_size),
+            transforms.RandomResizedCrop(input_size, scale=(0.4, 1.0), ratio=(0.75, 1.333)),
             transforms.ToTensor(),
             transforms.Normalize((0.5,),(0.5,))
             ])
@@ -88,10 +87,10 @@ class LetNet5(nn.Module):
                                                     batch_size=batch_size)
         
     def save(self):
-        torch.save(self.state_dict(), 'LetNet-5.ckpt')
+        torch.save(self.state_dict(), 'LetNet-5_v1.ckpt')
 
     def load(self):
-        path_ckpt = "./models/cnn/LetNet-5-easy_scut.ckpt"
+        path_ckpt = "./models/cnn/LetNet-5_v1.ckpt"
         checkpoint = torch.load(Path(path_ckpt))
         self.load_state_dict(checkpoint)
 

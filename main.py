@@ -44,7 +44,7 @@ class recognizer:
                 rects = np.append(rects, [cv2.boundingRect(poly)], axis=0)
 
         areas = rects[:,2] * rects[:,3]
-        args = np.argsort(areas)[::-1][:6]
+        args = np.argsort(areas)[::-1][:10]
         
         regions_of_interest = []
         ids = []
