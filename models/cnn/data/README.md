@@ -1,7 +1,7 @@
 The structure of this folder is as follows:
 
-.
-`-- scut
+<pre>
+-- scut
     |-- preprocessed
     |   |-- difficult_samples
     |   |   |-- test
@@ -92,4 +92,4 @@ The structure of this folder is as follows:
      -- raw
         |-- difficult_samples
          -- easy_samples
-`
+</pre>
