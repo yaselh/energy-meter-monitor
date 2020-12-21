@@ -1,0 +1,10 @@
+./easy_samples/1089.png 2,2,0,17,0
+./easy_samples/10890.png 6,8,6,4,17
+./easy_samples/10891.png 6,8,7,2,9
+./easy_samples/10892.png 6,8,7,7,10
+./easy_samples/10893.png 6,8,8,1,10
+./easy_samples/10894.png 6,8,8,5,11
+./easy_samples/10895.png 6,8,8,9,12
+./easy_samples/10896.png 6,8,9,3,3
+./easy_samples/10897.png 6,8,9,7,14
+./easy_samples/10898.png 6,9,0,1,5
