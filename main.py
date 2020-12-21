@@ -32,7 +32,7 @@ class recognizer:
         contours_image = np.zeros_like(binary)
         
         # find contours
-        _, contours, hierarchy = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        contours, hierarchy = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         cnts = []
         rects = np.empty((1,4), np.uint16)
         
