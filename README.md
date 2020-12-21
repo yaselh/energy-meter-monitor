@@ -4,9 +4,8 @@
 ## currently working on:
 - better region of interest estimation (see branch feat/roi)
 ## todo
-- train the model with a more suitable dataset
-- train with small variations in scaling and rotation
-- add better region of interest estimation
+- add non-maximum suppression for better region of interests
+- handle non-cropped images
 - clean-up and structure the repo
 
 # How to use
