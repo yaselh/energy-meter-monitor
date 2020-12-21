@@ -1,8 +1,12 @@
 # energy-meter-monitor
 
+
+## currently working on:
+- better region of interest estimation (see branch feat/roi)
 ## todo
 - train the model with a more suitable dataset
-- add learned regions of interest instead
+- train with small variations in scaling and rotation
+- add better region of interest estimation
 - clean-up and structure the repo
 
 # How to use
