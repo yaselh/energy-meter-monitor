@@ -4,8 +4,8 @@ import torch
 import numpy as np
 
 class recognizer:
-    def __init__(self):
-        pass
+    def __init__(self, thresh=0.6):
+        self.thresh = thresh
 
 
     def find_digits_contours(self, image):
@@ -77,18 +77,24 @@ class recognizer:
             roi = image[y:y+h, x:x+w]
 
             # predict
-            pred = model.predict(roi)
-            digits.append((id, pred))
+            pred,conf = model.predict(roi)
+
+            if conf > self.thresh:
+                digits.append((id, pred))
             
-            # draw rois and ids and preds
-            cv2.rectangle(image, (x,y), (x+w,y+h), (0,255,0))
+                # draw rois and ids and preds
+                cv2.rectangle(image, (x,y), (x+w,y+h), (0,255,0))
             
-            cv2.putText(image, "id:{}".format(id),
+                cv2.putText(image, "id:{}".format(id),
                     (x,y), cv2.FONT_HERSHEY_SIMPLEX,
                     0.3, (0,255,0), 1)
             
-            cv2.putText(image, "pred:{}".format(pred),
+                cv2.putText(image, "pred:{}".format(pred),
                     (x,y+10), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.3, (0,255,0), 1)
+
+                cv2.putText(image, "conf:{:.2f}".format(conf),
+                    (x,y+20), cv2.FONT_HERSHEY_SIMPLEX,
                     0.3, (0,255,0), 1)
 
         return digits

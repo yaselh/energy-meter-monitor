@@ -139,8 +139,10 @@ class LetNet5(nn.Module):
             input = self.transforms(image).to(device)
             input = input.view(1, 1, input_size, input_size)
             output = self(input)
-            _, predicted = torch.max(output.data, 1)
-            return predicted.cpu().numpy()[0]
+            logprob, predicted = torch.max(output.data, 1)
+            predicted = predicted.cpu().numpy()[0]
+            confidence= torch.exp(logprob).cpu().numpy()[0]
+            return predicted, confidence
 
 if __name__ == "__main__":
     mode = "train"
