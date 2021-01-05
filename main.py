@@ -1,9 +1,9 @@
-import models.cnn.letnet as ln
+import models.digits.letnet as ln
 import cv2
 import torch
 import numpy as np
 
-class recognizer:
+class Recognizer:
     def __init__(self, thresh=0.7):
         self.thresh = thresh
 
@@ -95,13 +95,12 @@ if __name__ == "__main__":
     
     #list of image to perform predition on:
     pred_list = [
-        #'images/test/cropped_1.png',
-        #'images/test/cropped_2.png',
-        'images/test/res.png'
+        'images/test/cropped_1.png',
+        'images/test/cropped_2.png',
     ]
 
     #model used to predict:
-    model = recognizer()
+    model = Recognizer()
 
 
     #run predictions:
