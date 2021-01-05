@@ -4,33 +4,31 @@ import torch
 import numpy as np
 
 class recognizer:
-    def __init__(self, thresh=0.6):
+    def __init__(self, thresh=0.7):
         self.thresh = thresh
 
-
-    def find_digits_contours(self, image):
+    def find_regions_of_interest(self, image):
         """ 
         Returns the contours around the digits to recognize.
         """
 
         # apply Gaussian filter for smoothing effect of shadows etc. before adaptive threshold
         # use 5x5 kernel with Sigma = 0, which gives us StD = 0.3*((ksize-1)*0.5 - 1) + 0.8
-        gray = cv2.GaussianBlur(image, (5, 5), 0)
+        blurred = cv2.GaussianBlur(image, (27, 27), 0)
 
         # use Adaptive threshold to get threshold values based on different regions.
         # use blocksize 7 for region size and 4 as constant to subtract from the Gaussian weighted sum
-        binary = cv2.adaptiveThreshold(gray, 255,  cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 21, 4)
+        binary = cv2.adaptiveThreshold(blurred, 255,  cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV, 11, 4)
 
         # erode
         kernel = np.ones((3,3), np.uint8)
         binary = cv2.erode(binary, kernel)
-
+        
         # dilate
-        kernel = np.ones((5,5), np.uint8)
+        kernel = np.ones((30,30), np.uint8)
         binary = cv2.dilate(binary, kernel)
 
-        contours_image = np.zeros_like(binary)
-        
+        cv2.imwrite("bin.png", binary)        
         # find contours
         contours, hierarchy = cv2.findContours(binary, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         cnts = []
@@ -44,35 +42,22 @@ class recognizer:
                 rects = np.append(rects, [cv2.boundingRect(poly)], axis=0)
 
         areas = rects[:,2] * rects[:,3]
-        args = np.argsort(areas)[::-1][:10]
-        
-        regions_of_interest = []
-        ids = []
-        for a in args:
-            regions_of_interest.append(rects[a])
-            ids.append(a)
-
-        return ids, regions_of_interest
+        rects = rects[ areas > 0 ]
+        areas = areas[ areas > 0 ]
+        return rects
 
     def predict(self, image):
-        """
-        This function will handle the core OCR processing of images.
-        """        
-    
-        # convert image to binary
-        ids, rois = self.find_digits_contours(image)
-
-
-        digits = []
-    
+        # sample patches
+        rois = self.find_regions_of_interest(image)
+        
+        # load predictor
         device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
         model = ln.LetNet5().to(device)
         model.load()
-   
-        #h,w = 55,43 #scut difficult
-        #h,w = 100,78 #scut easy
-        #h,w = 46,42 #black
-        for id,roi in zip(ids,rois):
+
+        # get predictions with high confidence
+        digits = []
+        for i,roi in enumerate(rois):
             x,y,w,h = roi
             roi = image[y:y+h, x:x+w]
 
@@ -80,12 +65,12 @@ class recognizer:
             pred,conf = model.predict(roi)
 
             if conf > self.thresh:
-                digits.append((id, pred))
-            
-                # draw rois and ids and preds
+                digits.append((i, pred))
+                
+                # draw results
                 cv2.rectangle(image, (x,y), (x+w,y+h), (0,255,0))
             
-                cv2.putText(image, "id:{}".format(id),
+                cv2.putText(image, "id:{}".format(i),
                     (x,y), cv2.FONT_HERSHEY_SIMPLEX,
                     0.3, (0,255,0), 1)
             
@@ -96,9 +81,7 @@ class recognizer:
                 cv2.putText(image, "conf:{:.2f}".format(conf),
                     (x,y+20), cv2.FONT_HERSHEY_SIMPLEX,
                     0.3, (0,255,0), 1)
-
         return digits
-
 
 class util:
     def vconcat_resize_min(im_list, interpolation=cv2.INTER_CUBIC):
@@ -112,8 +95,9 @@ if __name__ == "__main__":
     
     #list of image to perform predition on:
     pred_list = [
-        'images/test/cropped_1.png',
-        'images/test/cropped_2.png'
+        #'images/test/cropped_1.png',
+        #'images/test/cropped_2.png',
+        'images/test/res.png'
     ]
 
     #model used to predict:

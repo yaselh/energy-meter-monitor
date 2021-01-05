@@ -90,8 +90,8 @@ class LetNet5(nn.Module):
         torch.save(self.state_dict(), 'LetNet-5_v1.ckpt')
 
     def load(self):
-        path_ckpt = "./models/cnn/LetNet-5_v1.ckpt"
-        checkpoint = torch.load(Path(path_ckpt))
+        path_ckpt = "./models/cnn/weights/LetNet-5_v1.ckpt"
+        checkpoint = torch.load(Path(path_ckpt), map_location=device)
         self.load_state_dict(checkpoint)
 
     def fit(self):
